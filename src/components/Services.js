@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Title from './Title'
+import FeaturedRooms from './FeaturedRooms'
 import { FaCocktail, FaHiking, FaShuttleVan, FaBeer } from 'react-icons/fa';
 // import { Link } from 'react-router-dom'
 
@@ -32,22 +33,27 @@ const Services = () => {
     )
 
     return (
-        <section className="services">
-            <Title title="services">
+        <>
+            <section className="services">
+                <Title title="services">
 
-            </Title>
-            <div className="services-center">
+                </Title>
+                <div className="services-center">
 
-                {services.map((data, index) =>
-                    <article key={index} className="service">
-                        <span> {data.icon} </span>
-                        <h6> {data.title} </h6>
-                        <p> {data.info} </p>
-                    </article>
-                )}
+                    {services.map((data, index) =>
+                        <article key={index} className="service">
+                            <span> {data.icon} </span>
+                            <h6> {data.title} </h6>
+                            <p> {data.info} </p>
+                        </article>
+                    )}
 
-            </div>
-        </section>
+                </div>
+
+            </section>
+
+            <FeaturedRooms />
+        </>
     )
 }
 
