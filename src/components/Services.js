@@ -36,7 +36,7 @@ const Services = () => {
         <>
             <section className="services">
                 <Title title="services">
-
+                        
                 </Title>
                 <div className="services-center">
 

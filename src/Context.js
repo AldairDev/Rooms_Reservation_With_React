@@ -1,38 +1,47 @@
 import React, { useState, useEffect } from "react";
 import items from "./data";
-import FeaturedRooms from "./components/FeaturedRooms";
+// import FeaturedRooms from "./components/FeaturedRooms";
 
 const RoomContext = React.createContext();
 
 function RoomProvider({ children }) {
-  const [ro, setRo] = useState({
-    rooms: [],
-    sortedRooms: [],
-    featuredRooms: [],
-    loading: true
-  });
 
-  useEffect(() => {
-    const formatData = ite => {
-      let temItems = ite.map(item => {
-        let id = item.sys.id;
-        let images = item.fields.images.map(image => image.fields.file.url);
-        let room = { ...item.fields, images, id };
-        return room;
-      });
+    const [rooms, setRooms] = useState({
+        rooms: [],
+        sortedRooms: [],
+        featuredRooms: [],
+        loading: true
+    });
 
-      return temItems;
-    };
-    // setData(items)
-    const rooms = formatData(items);
-    const featuredRooms = rooms.filter(room => room.featured === true);
-    console.log(featuredRooms);
-    setRo({ rooms, featuredRooms, sortedRooms: rooms, loading: false });
-  }, []);
+    useEffect(() => {
 
-  return (
-    <RoomContext.Provider value={{ ...ro }}>{children}</RoomContext.Provider>
-  );
+        const formatData = ite => {
+            let temItems = ite.map(item => {
+                let id = item.sys.id;
+                let images = item.fields.images.map(image => image.fields.file.url);
+                let room = { ...item.fields, images, id };
+                return room;
+            });
+
+            return temItems;
+        };
+
+        const rooms = formatData(items);
+        const featuredRooms = rooms.filter(room => room.featured === true);
+        console.log(featuredRooms);
+        setRooms({ rooms, featuredRooms, sortedRooms: rooms, loading: false });
+    }, []);
+
+    const getRoom = slug => {
+        const temItems = [...rooms.rooms];
+        const room = temItems.find(rooms => rooms.slug === slug)
+
+        return room
+    }
+
+    return (
+        <RoomContext.Provider value={{ ...rooms, getRoom }}> {children}</RoomContext.Provider >
+    );
 }
 
 const RoomConsumer = RoomContext.Consumer;

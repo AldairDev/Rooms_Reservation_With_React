@@ -1,14 +1,23 @@
 import React, { useContext } from "react";
 import { RoomContext } from "../Context";
+import Title from './Title'
 import Loading from "./Loading";
+import Room from './Room'
 export default function FeaturedRooms() {
-  const { featuredRooms: rooms } = useContext(RoomContext);
-  console.log(rooms);
 
+  let { loading, featuredRooms: room } = useContext(RoomContext);
+
+  const rooms = (room.map(room => {
+    return <Room key={room.id} room={room} />
+  })
+  )
   return (
-    <div>
-      from FeaturedRooms
-      <Loading />
-    </div>
+    <section className="featured-rooms">
+      <Title title="Featured Rooms" />
+      <div className="featured-rooms-center">
+        {loading ? <Loading /> : rooms}
+      </div>
+
+    </section>
   );
 }
