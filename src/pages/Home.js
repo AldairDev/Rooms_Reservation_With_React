@@ -12,7 +12,6 @@ const Home = () => {
                     <Link to="/rooms" className="btn-primary"> Our rooms </Link>
                 </Banner>
             </Hero>
-
             <Services />
         </React.Fragment >
 

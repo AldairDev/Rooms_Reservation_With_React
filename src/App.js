@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.css'
 import NavBar from './components/Navbar'
 import Home from './pages/Home';
-import Room from './pages/Room';
+import Rooms from './pages/Rooms';
 import SingleRoom from './pages/SingleRoom';
 import Error from './pages/Error';
 import { RoomProvider } from './Context'
@@ -18,7 +18,7 @@ const App = () => {
         
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/rooms" component={Room} />
+          <Route exact path="/rooms" component={Rooms} />
           <Route path="/singleRoom/:slug" component={SingleRoom} />
           <Route component={Error} />
         </Switch>
