@@ -8,10 +8,11 @@ export default function FeaturedRooms() {
   let { loading, featuredRooms: room } = useContext(RoomContext);
 
   const rooms = (room.map(room => {
-    return <Room key={room.id} room={room} />
+    return <Room key={room.id} room={room}  />
   })
   )
   return (
+    
     <section className="featured-rooms">
       <Title title="Featured Rooms" />
       <div className="featured-rooms-center">

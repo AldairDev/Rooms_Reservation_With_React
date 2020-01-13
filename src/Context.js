@@ -46,4 +46,12 @@ function RoomProvider({ children }) {
 
 const RoomConsumer = RoomContext.Consumer;
 
-export { RoomProvider, RoomConsumer, RoomContext };
+function withRoomConsumer(Component) {
+    return function cosumerWrapper(props) {
+        return <RoomConsumer>
+            {value => <Component {...props} context={value} /> }
+        </RoomConsumer>
+    }
+}
+
+export { RoomProvider, RoomConsumer, RoomContext, withRoomConsumer };
