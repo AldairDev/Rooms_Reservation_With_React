@@ -1,7 +1,7 @@
 import React from "react";
 import Room from "./Room";
 const RoomsList = ({ rooms }) => {
-    console.log(rooms)
+    console.log('[RoomList]',rooms)
     if (rooms.length === 0) {
 
         return (
