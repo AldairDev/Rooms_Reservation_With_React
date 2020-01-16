@@ -35,6 +35,7 @@ function RoomProvider({ children }) {
             rooms, 
             featuredRooms,
             sortedRooms: rooms,  
+            type: 'all',
             loading: false,
             price: maxPrice, 
             maxPrice, 
@@ -54,32 +55,50 @@ function RoomProvider({ children }) {
     };
 
 
-    const handleChange = event => {
+    const handleChange = async event => {
         const target = event.target;
-        console.log(target)
+        console.log('target',target)
         // const value = event.type === "checkbox" ? target.checked : target.value;
         const value = target.value;
-        console.log(value)
+        console.log('value', value)
         const name = event.target.name;
-        console.log(name , value);
-
-        setRooms(
-            {
-                [name]: value
-            }, filterForm()
+        console.log('name , value',name , value);
+        console.log("[handleChange] rom",rom)
+        let rom_local = { ...rom }
+        rom_local.type = value
+        console.log("[handleChange] rom_local",rom_local)
+        await setRooms(
+            rom_local,
+            // {
+                //     ...rom ,
+            //     type: value,
+            // },
+            filterForm(value)
         )
+        console.log("FINAL [handleChange] rom",rom)
+            // setRooms(
+        //     {
+        //         ...rom,
+        //         // type: value
+        //         [name]: value
+        //     }, 
+        //     filterForm()
+        // )
 
         // let value = event.target.value;
         // console.log(type, name, value)
     }
 
-    const filterForm = () => {
-        // console.log("hello")
-        let { rooms, type, capacity, price, minSize, maxSize, breakfast, pets } = rom
+    const filterForm = (type) => {
+        console.log("[filterForm] rom",rom)
+        let { rooms, capacity, price, minSize, maxSize, breakfast, pets } = rom
         let tempRooms = [...rooms];
+        console.log("tempRooms 1",tempRooms)
+        console.log("type",type)
         if (type !== "all"){
             tempRooms = tempRooms.filter(room => room.type === type )
         }
+        console.log("tempRooms 2",tempRooms)
 
         setRooms({ sortedRooms : tempRooms  })
     }
@@ -94,7 +113,7 @@ function RoomProvider({ children }) {
     }
 
     return (
-        <RoomContext.Provider value={{ ...rom, getRoom, handleChange }}> {children}</RoomContext.Provider >
+        <RoomContext.Provider value={{ ...rom, getRoom, handleChange }}> {children}</RoomContext.Provider > 
     );
 }
 

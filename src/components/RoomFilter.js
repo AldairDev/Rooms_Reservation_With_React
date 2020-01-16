@@ -7,16 +7,16 @@ const getUnique = (items, value) => {
 };
 
 export default function RoomFilter({ rooms }) {
-    // console.log(rooms)
+    console.log('[RoomFilter]',rooms)
     const context = useContext(RoomContext)
     // console.log(context);
     const { handleChange, type, capacity, price, minPrice, maxPrice, minSize, maxSize, breakfast, pets } = context
-    // let types = getUnique(rooms, "type");
-    // types = ["all", ...types];
+    let types = getUnique(rooms, "type");
+    types = ["all", ...types];
 
-    // types = types.map((item, index) => (
-    //     <option key={index} value={item}> {item} </option>
-    // ))
+    types = types.map((item, index) => (
+        <option key={index} value={item}> {item} </option>
+    ))
     
     return (
         <section className="filter-container">
@@ -30,10 +30,12 @@ export default function RoomFilter({ rooms }) {
                         id="type"
                         onChange={handleChange}
                         className="form-control"
-                        // value={type}
+                        value={type}
                     >
-                        <option value="nuevo">a ver</option>
-                        <option value="nuevo">khee</option>
+                        { types }
+                        
+                        {/* <option value="nuevo">a ver</option> */}
+                        {/* <option value="nuevo">khee</option> */}
                     </select>
                 </div>
             </form>
