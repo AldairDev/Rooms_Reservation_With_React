@@ -11,13 +11,13 @@ export default function RoomFilter({ rooms }) {
     const context = useContext(RoomContext)
     // console.log(context);
     const { handleChange, type, capacity, price, minPrice, maxPrice, minSize, maxSize, breakfast, pets } = context
-    // let types = getUnique(rooms, "type");
-    // types = ["all", ...types];
+    let types = getUnique(rooms, "type");
+    types = ["all", ...types];
 
-    // types = types.map((item, index) => (
-    //     <option key={index} value={item}> {item} </option>
-    // ))
-    
+    types = types.map((item, index) => (
+        <option key={index} value={item}> {item} </option>
+    ))
+
     return (
         <section className="filter-container">
             <Title title="search rooms" />
@@ -30,10 +30,9 @@ export default function RoomFilter({ rooms }) {
                         id="type"
                         onChange={handleChange}
                         className="form-control"
-                        // value={type}
+                        value={type}
                     >
-                        <option value="nuevo">a ver</option>
-                        <option value="nuevo">khee</option>
+                        {types}
                     </select>
                 </div>
             </form>
