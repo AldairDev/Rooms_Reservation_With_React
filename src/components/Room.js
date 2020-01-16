@@ -1,11 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Title from './Title'
 export default function Room({ children, room }) {
 
     const { images, price, name, slug } = room
-    console.log(room)
-
     return (
         <>
             <article className="room">

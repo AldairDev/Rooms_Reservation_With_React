@@ -2,13 +2,15 @@ import React from 'react'
 import RoomFilter from './RoomFilter'
 import RoomList from './RoomList'
 import { withRoomConsumer } from '../Context'
+import Loading from './Loading'
+
 function RoomContainer({ context }) {
 
     const { loading, rooms, sortedRooms } = context
 
-    if(!rooms){
-        return <div> no data yet </div>
-        
+    if (loading) {
+        return <Loading />
+
     }
     return (
         <>
