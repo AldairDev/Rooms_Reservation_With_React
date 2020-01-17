@@ -28,9 +28,9 @@ export default function RoomFilter({ rooms }) {
                     <select
                         name="type"
                         id="type"
-                        onChange={handleChange}
                         className="form-control"
                         value={type}
+                        onChange={handleChange}
                     >
                         {types}
                     </select>
