@@ -45,17 +45,17 @@ function RoomProvider({ children }) {
             //
             price: maxPrice,
             maxPrice,
-            maxSize
+            maxSize,
         }))
 
         setLel(state => ({
             ...state,
             game: "dota2",
             water: "cielo",
-            prueba: "lo que sea"
-        }))
-        // console.log("khe")
-    }, [])
+            prueba: "lo que sea",        })
+        )
+        filterRooms();
+    }, [rom.type])
 
     const formatData = (ite) => {
 
@@ -74,16 +74,16 @@ function RoomProvider({ children }) {
         return room
     };
     
-    const handleChange = async event  => {
+    const handleChange = event  => {
         const target = event.target;
         const value = target.type === "checkbox" ? target.checked : target.value;
         const name = target.name
         console.log(value, name);
 
-        setLel(state=>({
-            ...state,
-            name : "joan"
-        }))
+        // setLel(state=>({
+        //     ...state,
+        //     name : "joan"
+        // }))
 
 
         setRom(state => ({
