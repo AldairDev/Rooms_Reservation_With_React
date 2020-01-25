@@ -24,17 +24,14 @@ function RoomProvider({ children }) {
         pets: false
     })
 
-    const [lel, setLel] = useState({
-        name: "aldair",
-        lastName: "Sosa"
-    })
-
     useEffect(() => {
+
         let rooms = formatData(items);
         let featuredRooms = rooms.filter(room => room.featured === true);
         //
         let maxPrice = Math.max(...rooms.map(item => item.price));
         let maxSize = Math.max(...rooms.map(item => item.size));
+
 
         setRom(state => ({
             ...state,
@@ -45,17 +42,12 @@ function RoomProvider({ children }) {
             //
             price: maxPrice,
             maxPrice,
-            maxSize,
+            maxSize
         }))
 
-        setLel(state => ({
-            ...state,
-            game: "dota2",
-            water: "cielo",
-            prueba: "lo que sea",        })
-        )
-        filterRooms();
-    }, [rom.type])
+        filterRooms()
+
+    }, [rom.type, rom.capacity])
 
     const formatData = (ite) => {
 
@@ -65,7 +57,9 @@ function RoomProvider({ children }) {
             let room = { ...item.fields, images, id };
             return room;
         });
+
         return tempItems
+
     }
 
     const getRoom = slug => {
@@ -73,28 +67,22 @@ function RoomProvider({ children }) {
         const room = tempRooms.find(room => room.slug === slug)
         return room
     };
-    
-    const handleChange = event  => {
+
+    const handleChange = event => {
         const target = event.target;
         const value = target.type === "checkbox" ? target.checked : target.value;
         const name = target.name
-        console.log(value, name);
+        // console.log(value, name);
 
-        // setLel(state=>({
-        //     ...state,
-        //     name : "joan"
-        // }))
-
+        filterRooms(value)
 
         setRom(state => ({
             ...state,
-            price : 339,
             [name]: value
         }
         ));
-        
-        console.log(rom);
-        
+
+        console.log('[handleChange]', rom);
 
     };
 
@@ -111,21 +99,37 @@ function RoomProvider({ children }) {
             pets
         } = rom;
 
+        capacity = parseInt(capacity);
+
         let tempRooms = [...rooms];
-        if (type !== "all") {
-            tempRooms = tempRooms.filter(rooms => rooms.type === type)
+
+        if (type === "all") {
+
+            let cuarto = formatData(items);
+            // console.log('if all', cuarto);
+
+            setRom(state => ({
+                ...state,
+                sortedRooms: cuarto
+            }))
+        }
+
+        else {
+            if (type !== "all") {
+                console.log('if notAll', rooms);
+                tempRooms = tempRooms.filter(rooms => rooms.type === type)
+            }
+            if (capacity !== 1) {
+                tempRooms = tempRooms.filter(rooms => rooms.capacity >= capacity)
+            }
+            console.log('[filterRooms]', tempRooms);
+
+
             setRom(state => ({
                 ...state,
                 sortedRooms: tempRooms
             }))
         }
-        if (type === "all") {
-            setRom(state => ({
-                ...state,
-                sortedRooms: rooms
-            }))
-        }
-
     }
 
     return (
@@ -147,7 +151,7 @@ function withRoomConsumer(Component) {
 }
 export { RoomProvider, RoomConsumer, withRoomConsumer, RoomContext }
 
-// import React, {Component} from 'react';
+// import React, { Component } from 'react';
 // import items from "./data";
 // const RoomContext = React.createContext();
 
@@ -155,7 +159,7 @@ export { RoomProvider, RoomConsumer, withRoomConsumer, RoomContext }
 
 //     state = {
 //         rooms: [],
-//         name : "wendy",
+//         name: "wendy",
 //         sortedRooms: [],
 //         featuredRooms: [],
 //         loading: true,
@@ -176,6 +180,8 @@ export { RoomProvider, RoomConsumer, withRoomConsumer, RoomContext }
 //         // this.getData();
 //         let rooms = this.formatData(items);
 //         let featuredRooms = rooms.filter(room => room.featured === true);
+//         console.log(featuredRooms);
+
 //         //
 //         let maxPrice = Math.max(...rooms.map(item => item.price));
 //         let maxSize = Math.max(...rooms.map(item => item.size));
@@ -189,7 +195,12 @@ export { RoomProvider, RoomConsumer, withRoomConsumer, RoomContext }
 //             maxPrice,
 //             maxSize
 //         });
+
+//         // console.log('useEffect', this.state)
 //     }
+
+//     // let khe = console.log('after', this.state);
+
 
 //     formatData(items) {
 //         let tempItems = items.map(item => {
@@ -220,6 +231,8 @@ export { RoomProvider, RoomConsumer, withRoomConsumer, RoomContext }
 //             },
 //             this.filterRooms
 //         );
+//         // console.log('handlechange',this.state);
+
 //     };
 //     filterRooms = () => {
 //         let {
@@ -233,6 +246,8 @@ export { RoomProvider, RoomConsumer, withRoomConsumer, RoomContext }
 //             pets
 //         } = this.state;
 
+//         capacity = parseInt(capacity);
+
 //         let tempRooms = [...rooms];
 //         if (type !== "all") {
 //             tempRooms = tempRooms.filter(rooms => rooms.type === type);
@@ -245,14 +260,25 @@ export { RoomProvider, RoomConsumer, withRoomConsumer, RoomContext }
 //                 sortedRooms: rooms
 //             })
 //         }
-//         // transform values
-//         // get capacity
+
+//         if (capacity !== 1) {
+//             tempRooms = tempRooms.filter(rooms => rooms.capacity >= capacity)
+//             this.setState({
+//                 sortedRooms: tempRooms
+//             })
+//             // transform values
+//             // get capacity
+
+//         }
+//         console.log('return', this.state)
 
 //     }
 
 //     render() {
+
 //         return (
 //             <RoomContext.Provider
+
 //                 value={{
 //                     ...this.state,
 //                     getRoom: this.getRoom,
