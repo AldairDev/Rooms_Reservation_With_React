@@ -9,10 +9,9 @@ import { Link } from 'react-router-dom'
 const SingleRoom = (props) => {
 
     const { getRoom } = useContext(RoomContext)
-
+    
     const [room, setRoom] = useState({
         slug: props.match.params.slug,
-        defaultBcg
     })
 
 
