@@ -21,15 +21,14 @@ function RoomProvider({ children }) {
         minSize: 0,
         maxSize: 0,
         breakfast: false,
-        pets: false
+        pets: false,
+        name: ""
     })
 
-    const prueba = () => {
-        
+    useEffect(() => {
+
         let rooms = formatData(items);
         let featuredRooms = rooms.filter(room => room.featured === true);
-        console.log(featuredRooms);
-
         let maxPrice = Math.max(...rooms.map(item => item.price));
         let maxSize = Math.max(...rooms.map(item => item.size));
 
@@ -47,18 +46,39 @@ function RoomProvider({ children }) {
             maxSize
         }))
 
+    }, [])
+
+    const handleCheckBox = () => {
+
+        console.log('ejecutandose esto');
+        console.log(rom.sortedRooms);
+
+        //cambio el estado a true o false cada vez que se dispara el "onChange"
+        setRom(state => ({
+            ...state,
+            breakfast: !state.breakfast
+        }));
+
+        // llamo a las propiedades del estado.
+        let { rooms, breakfast } = rom;
+
+        let tempRooms = [...rooms]; //creo una nueva variable a partir de los datos de "rooms"
+
+        // filtro para devolver las habitaciones que solo tengan "breakfast" disponibles
+        if (breakfast) {
+
+            tempRooms = tempRooms.filter(rooms => rooms.breakfast === true)
+        }
+
+        //vuelvo a setear el estado pero ya con las habitaciones filtradas
+        setRom(state => ({
+            ...state,
+            sortedRooms: tempRooms
+        }))
     }
-    useEffect(() => {
 
-
-        prueba()
-
-        // filterRooms()
-    },[])
-
-    console.log('[after]', rom); // estado con nuevos valores
+    console.log('[after]', rom.sortedRooms); // estado con nuevos valores
     // console.log('[nuevaData]', nuevo); // estado con nuevos valores
-
 
 
     const formatData = (ite) => {
@@ -76,16 +96,19 @@ function RoomProvider({ children }) {
 
     const getRoom = slug => {
         let tempRooms = [...rom.rooms];
-        const room = tempRooms.find(room => room.slug === slug)        
+        const room = tempRooms.find(room => room.slug === slug)
         return room
     };
 
 
     const handleChange = (event) => {
+
+
         const target = event.target;
-        const value = target.type === "checkbox" ? target.checked : target.value;
-        const name = target.name
-        // console.log(value, name);
+        // const value = target.type === "checkbox" ? target.checked : target.value;
+        const value = event.target.value;
+        const name = target.name;
+        console.log(value, name);
 
 
         setRom(state => ({
@@ -95,12 +118,10 @@ function RoomProvider({ children }) {
         ));
 
         filterRooms()
-
         console.log('[handleChange]', rom);
 
     };
 
-    
     const filterRooms = () => {
 
         let {
@@ -119,39 +140,35 @@ function RoomProvider({ children }) {
 
         let tempRooms = [...rooms];
 
-        // if (type === "all" && capacity === 1 && price === 0) {
-        //     // console.log('price', price);
+        if (type !== "all") {
+            // console.log('if notAll', rooms);
+            tempRooms = tempRooms.filter(rooms => rooms.type === type)
+        }
+        if (capacity !== 1) {
+            tempRooms = tempRooms.filter(rooms => rooms.capacity >= capacity)
+            console.log('[filterRooms]', tempRooms);
+        }
 
-        //     let cuarto = formatData(items);
-        //     // console.log('if all', cuarto);
+        tempRooms = tempRooms.filter(rooms => rooms.price <= price)
 
-        //     setRom(state => ({
-        //         ...state,
-        //         sortedRooms: cuarto
-        //     }))
-        // }
+        if (breakfast) {
+            tempRooms = tempRooms.filter(rooms => rooms.breakfast === true)
+        }
 
-        // else {
-            if (type !== "all") {
-                // console.log('if notAll', rooms);
-                tempRooms = tempRooms.filter(rooms => rooms.type === type)
-            }
-            if (capacity !== 1) {
-                tempRooms = tempRooms.filter(rooms => rooms.capacity >= capacity)
-                console.log('[filterRooms]', tempRooms);
-            }
+        if (pets) {
+            tempRooms = tempRooms.filter(rooms => rooms.pets === true)
+        }
 
-            tempRooms = tempRooms.filter(rooms => rooms.price <= price)
-
-            setRom(state => ({
-                ...state,
-                sortedRooms: tempRooms
-            }))
+        setRom(state => ({
+            ...state,
+            sortedRooms: tempRooms
+        }))
         // }
     }
 
+
     return (
-        <RoomContext.Provider value={{ ...rom, getRoom, handleChange,filterRooms }}>
+        <RoomContext.Provider value={{ ...rom, getRoom, handleChange, filterRooms, handleCheckBox }}>
             {children}
 
         </RoomContext.Provider>

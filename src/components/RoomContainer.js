@@ -20,8 +20,8 @@ function RoomContainer() {
     }
     return (
         <>
-            <RoomFilter rooms={rooms} />
-            <RoomList sortedRoom={sortedRooms} />
+            <RoomFilter rooms={rooms} />  {/*componente para filtrar las habitaciones */}
+            <RoomList sortedRoom={sortedRooms} /> {/*componente para mostrar las habitaciones del estado "sortedRooms" */}
         </>
     )
 }
