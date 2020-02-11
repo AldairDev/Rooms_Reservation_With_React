@@ -2,7 +2,7 @@
   "name": "airbnbfake",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://AldairDev.github.io/Reservation-App/",
+  "homepage": "https://AldairDev.github.io/Rooms_Reservation_With_React/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
@@ -16,12 +16,12 @@
     "styled-components": "^4.4.1"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy" : "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy" : "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
